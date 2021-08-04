@@ -1,0 +1,7 @@
+{
+  "name": "expense",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
