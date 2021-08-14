@@ -1,17 +1,70 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 3
+      Ledger
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+<form [formGroup]="ledgerForm">
+  <ion-list lines="full" class="ion-no-margin">
+
+    <ion-item>
+      <ion-label position="floating">Your message</ion-label>
+      <ion-input formControlName="message"></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col size="8">
+        <ion-item>
+          <ion-label position="floating">Your amount</ion-label>
+          <ion-input type="number" formControlName="amount"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="4">
+        <ion-item style="margin-left: 10px;">
+            <ion-button size="small" color="tertiary" (click)="CreateRecord()"  [disabled]="ledgerForm.invalid">submit</ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+  </ion-list>
+</form>
+
+<div *ngFor="let generallst of generalList">
+
+  <ion-card *ngIf="generallst.flag === 'new'" color="success">
+    <ion-card-content>
+      {{generallst.message}}
+    </ion-card-content>
+    <ion-item color="success">
+      <ion-label class="center">
+        <ion-icon name="cash" slot="start"></ion-icon>
+        {{generallst.amount}}
+      </ion-label>
+      <ion-button color="light" slot="start" (click)="UpdateRecord(generallst)">strike</ion-button>
+      <ion-button color="light" slot="end" (click)="RemoveRecord(generallst.id)">delete</ion-button>
+    </ion-item>
+  </ion-card>
+
+  <ion-card *ngIf="generallst.flag === 'striked'" color="danger">
+    <ion-card-content class="striked">
+      {{generallst.message}}
+    </ion-card-content>
+    <ion-item color="danger">
+      <ion-label  class="striked center">
+        <ion-icon name="cash" slot="start"></ion-icon>
+        {{generallst.amount}}
+      </ion-label>
+      <ion-button color="warning" (click)="unstrike(generallst)" slot="start">un-strike</ion-button>
+      <ion-button color="warning" (click)="RemoveRecord(generallst.id)" slot="end">delete</ion-button>
+    </ion-item>
+  </ion-card>
+
+</div>
+
+
+
 </ion-content>
